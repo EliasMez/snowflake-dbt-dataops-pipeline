@@ -1,11 +1,11 @@
-# NYC Taxi Data Pipeline
+# {{config.site_name}}
 
 This GitHub Actions workflow automates the end-to-end data pipeline, from initializing the Snowflake infrastructure to producing analytical tables and views using Python and dbt.
 
 <br>
-<a href="https://github.com/EliasMez/nyc-taxi-pipeline/">💻 Project source code</a>
+<a href="https://github.com/EliasMez/{{ config.repo_name }}/">💻 Project source code</a>
 <br>
-<a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Online **dbt** documentation</a>
+<a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 Online **dbt** documentation</a>
 <br>
 
 ## 📊 Data Source
@@ -15,7 +15,7 @@ This GitHub Actions workflow automates the end-to-end data pipeline, from initia
 The data includes:
 
 - Pickup and dropoff dates/times
-- GPS trip locations
+- Pickup and dropoff zones
 - Distances, detailed fares, payment types
 - Passenger count reported by the driver
 

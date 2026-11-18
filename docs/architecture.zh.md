@@ -15,7 +15,7 @@
 
 ## 📁 项目结构
 ```bash
-nyc-taxi-pipeline/
+snowflake-dbt-dataops-pipeline/
 ├── .github/
 │   ├── workflows/
 │   │   ├── nyc_taxi_pipeline.yml
@@ -49,7 +49,6 @@ nyc-taxi-pipeline/
             ├── final/
             └── marts/
 ```
-<br>
 
 ## 📊 数据处理流程
 
@@ -71,7 +70,9 @@ nyc-taxi-pipeline/
    执行 dbt 转换（STAGING 然后是 FINAL）。
 6. **运行 dbt 测试**
    执行 dbt 测试以验证模型。
-
+7. **备份策略**  
+   自动配置数据库、RAW表和FINAL模式的备份策略。
+   
 ### 质量流程
 
 - **CodeQL 安全扫描**
@@ -86,4 +87,73 @@ nyc-taxi-pipeline/
   通过 Python Semantic Release 自动进行版本控制、生成变更日志和发布版本，每次推送或拉取请求到 `main` 时触发。
 - **SQL 代码质量**
   使用 SQLFluff 对 SQL 代码（dbt 模型和 Snowflake 脚本）进行自动 linting，每次推送或拉取请求到 `dev` 和 `main` 时执行。
-``
+
+
+## 数据建模 (Data Modeling)
+
+此表记录了**数据的存储方式**。
+
+| 表名称                    | 模式             | 表类型    | 物化方式  |
+| :----------------------- | :---------------| :------- | :--------|
+| FILE_LOADING_METADATA    | `SCHEMA_RAW`    | 瞬态表    | 表       |
+| YELLOW_TAXI_TRIPS_RAW    | `SCHEMA_RAW`    | 永久表    | 增量      |
+| TAXI_ZONE_LOOKUP         | `SCHEMA_RAW`    | 永久表    | 表       |
+| TAXI_ZONE_STG            | `SCHEMA_STAGING`    | 瞬态表    | 表       |
+| YELLOW_TAXI_TRIPS_STG    | `SCHEMA_STAGING`    | 瞬态表    | 增量      |
+| int_trip_metrics         | `SCHEMA_STAGING`    |          | 视图      |
+| fact_trips               | `SCHEMA_FINAL`  | 永久表    | 增量      |
+| dim_locations            | `SCHEMA_FINAL`  | 永久表    | 表        |
+| dim_time                 | `SCHEMA_FINAL`  | 永久表    | 表        |
+| dim_date                 | `SCHEMA_FINAL`  | 永久表    | 表        |
+| marts                    | `SCHEMA_FINAL`  |          | 视图      |
+
+详细内容可查阅 <a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 在线 <strong>dbt</strong> 文档</a>
+
+**星型模式（ERD）**
+
+```mermaid
+%%{init: {"themeVariables": {"fontSize": "10px"}}}%%
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number date_id FK
+        number time_id FK
+        number location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+        int year
+        int month
+        int day_of_week
+    }
+    DIM_TIME {
+        number time_id PK
+        int hour
+        string period_of_day
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+        string zone
+        string borough
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
+
+## 📐 缓慢变化维度
+
+3 个维度均为 **SCD Type 0**：不预期任何变化。
+
+| 维度 | SCD 类型 | 理由 |
+|------|---------|------|
+| `dim_date` | Type 0 | 日期属性永不改变 |
+| `dim_time` | Type 0 | 时间属性永不改变 |
+| `dim_locations` | Type 0 | NYC TLC 区域参考数据稳定 |
+
+可能的演进：
+
+- 区域名称更正 → **SCD Type 1**（覆盖，无历史记录）
+- 区域拆分 → **SCD Type 2**（新增行，含 `valid_from`、`valid_to`、`is_current`）

@@ -14,43 +14,58 @@ clean-targets:
   - "target"
   - "dbt_packages"
 
+vars:
+  repo_name: "snowflake-dbt-dataops-pipeline"
+  project_name: "Snowflake & dbt DataOps Pipeline"
+  staging_table: "{{ env_var('STAGING_TABLE') }}"
+
 models:
   NYC_Taxi_dbt:
     staging:
+      +materialized: table
+      +transient: true
+      +schema: "{{ env_var('STAGING_SCHEMA') }}"
+      +on_schema_change: fail
+      
       int_trip_metrics:
         +materialized: view
         +unique_key: trip_id
-        +schema: "{{ env_var('STAGING_SCHEMA') }}"
-        +on_schema_change: fail
       yellow_taxi_trips_stg:
         +materialized: incremental
         +unique_key: trip_id
-        +schema: "{{ env_var('STAGING_SCHEMA') }}"
-        +on_schema_change: fail
+        +transient: true
+        +alias: "{{ env_var('STAGING_TABLE') }}"
+      taxi_zone_stg:
+        +materialized: table
+        +unique_key: locationid
+        +transient: true
+
     final:
+      +materialized: table
+      +transient: false
+      +schema: "{{ env_var('FINAL_SCHEMA') }}"
+      
       fact_trips:
         +materialized: incremental
         +unique_key: trip_id
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_locations:
         +materialized: table
         +unique_key: location_id
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_time:
         +materialized: table
         +unique_key: time_key
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
       dim_date:
         +materialized: table
         +unique_key: date_key
-        +schema: "{{ env_var('FINAL_SCHEMA') }}"
+
     marts:
       +materialized: view
       +schema: "{{ env_var('FINAL_SCHEMA') }}"
-
 
 seeds:
   NYC_Taxi_dbt:
     taxi_zone_lookup:
       +materialized: seed
-      +schema: "{{ env_var('STAGING_SCHEMA') }}"
+      +unique_key: locationid
+      +schema: "{{ env_var('RAW_SCHEMA') }}"
+      +alias: "taxi_zone_raw"

@@ -3,9 +3,9 @@
 Este flujo de trabajo de GitHub Actions automatiza la canalización de datos de extremo a extremo, desde la inicialización de la infraestructura de Snowflake hasta la producción de tablas y vistas analíticas utilizando Python y dbt.
 
 <br>
-<a href="https://github.com/EliasMez/nyc-taxi-pipeline/">💻 Código fuente del proyecto</a>
+<a href="https://github.com/EliasMez/{{ config.repo_name }}/">💻 Código fuente del proyecto</a>
 <br>
-<a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Documentación **dbt** en línea</a>
+<a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 Documentación **dbt** en línea</a>
 <br>
 
 ## 📊 Fuente de Datos
@@ -15,7 +15,7 @@ Este flujo de trabajo de GitHub Actions automatiza la canalización de datos de 
 Los datos incluyen:
 
 - Fechas/horas de recogida y entrega
-- Ubicaciones GPS de los viajes
+- Zonas de origen y destino
 - Distancias, tarifas detalladas, tipos de pago
 - Número de pasajeros reportado por el conductor
 

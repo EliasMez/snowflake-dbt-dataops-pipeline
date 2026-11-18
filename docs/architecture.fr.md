@@ -15,7 +15,7 @@
 
 ## 📁 Structure du Projet
 ```bash
-nyc-taxi-pipeline/
+snowflake-dbt-dataops-pipeline/
 ├── .github/
 │ ├── workflows/
 │ │ ├── nyc_taxi_pipeline.yml
@@ -49,8 +49,6 @@ nyc-taxi-pipeline/
       ├── final/
       └── marts/
 ```
-<br>
-
 
 ## 📊 Flux de traitement
 
@@ -72,6 +70,8 @@ Pipeline d'ingestion exécuté mensuellement :
    Transformations dbt (STAGING puis FINAL).
 6. **Run dbt Tests**  
    Exécution des tests dbt pour valider les modèles.
+7. **Backup Policy**  
+   Configuration automatique des politiques de sauvegarde pour la base, table RAW et schéma FINAL.
    
 ### Pipelines Qualité
 
@@ -81,3 +81,73 @@ Pipeline d'ingestion exécuté mensuellement :
 - **Python Code Tests** <br> Exécution des tests unitaires Pytest sur chaque push ou pull request vers `dev` et `main`.
 - **Release** <br> Versioning automatique, génération du changelog et publication des releases via Python Semantic Release sur chaque push ou pull request vers `main`.
 - **SQL Code Quality** <br> Linting automatique du code SQL (modèles dbt et scripts Snowflake) avec SQLFluff sur chaque push ou pull request vers `dev` et `main`.
+
+
+## Modélisation des Données
+
+Le tableau documente **comment les données sont stockées**.
+
+| Nom de la table         | Schéma        | Type de table | Matérialisation |
+| :---------------------- | :------------ | :------------ | :-------------- |
+| FILE_LOADING_METADATA   | `SCHEMA_RAW`  | Transitoire   | Table           |
+| YELLOW_TAXI_TRIPS_RAW   | `SCHEMA_RAW`  | Permanente    | Incremental     |
+| TAXI_ZONE_LOOKUP        | `SCHEMA_RAW`  | Permanente    | Table           |
+| TAXI_ZONE_STG           | `SCHEMA_STAGING`  | Transitoire   | Table           |
+| YELLOW_TAXI_TRIPS_STG   | `SCHEMA_STAGING`  | Transitoire   | Incremental     |
+| int_trip_metrics        | `SCHEMA_STAGING`  |               | Vue             |
+| fact_trips              | `SCHEMA_FINAL`| Permanente    | Incremental     |
+| dim_locations           | `SCHEMA_FINAL`| Permanente    | Table           |
+| dim_time                | `SCHEMA_FINAL`| Permanente    | Table           |
+| dim_date                | `SCHEMA_FINAL`| Permanente    | Table           |
+| marts                   | `SCHEMA_FINAL`|               | Vue             |
+
+details disponibles dans la <a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 Documentation <strong>dbt</strong> en ligne</a>
+
+**Schéma en étoile (ERD)**
+
+```mermaid
+%%{init: {"themeVariables": {"fontSize": "10px"}}}%%
+erDiagram
+    FACT_TRIPS {
+        number surrogate_key PK
+        number date_id FK
+        number time_id FK
+        number location_id FK
+        float fare_amount
+        float trip_distance
+    }
+    DIM_DATE {
+        number date_id PK
+        int year
+        int month
+        int day_of_week
+    }
+    DIM_TIME {
+        number time_id PK
+        int hour
+        string period_of_day
+    }
+    DIM_LOCATIONS {
+        number location_id PK
+        string zone
+        string borough
+    }
+    FACT_TRIPS }o--|| DIM_DATE : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_TIME : "pickup / dropoff"
+    FACT_TRIPS }o--|| DIM_LOCATIONS : "pickup / dropoff"
+```
+
+## 📐 Gestion des dimensions lentes
+
+Les 3 dimensions sont en **SCD Type 0** : aucune variation n'est attendue.
+
+| Dimension | Type SCD | Justification |
+|-----------|----------|---------------|
+| `dim_date` | Type 0 | Les attributs d'une date ne changent jamais |
+| `dim_time` | Type 0 | Les attributs d'une heure ne changent jamais |
+| `dim_locations` | Type 0 | Le référentiel des zones NYC TLC est stable |
+
+Évolutions possibles :
+
+- Correction de nom de zone → **SCD Type 1** (écrasement sans historisation)
+- Scission de zone → **SCD Type 2** (nouvelle ligne avec `valid_from`, `valid_to`, `is_current`)

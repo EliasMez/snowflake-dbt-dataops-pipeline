@@ -11,24 +11,45 @@ load_dotenv()
 ACCOUNT: str = os.getenv("SNOWFLAKE_ACCOUNT")
 USER: str = os.getenv("SNOWFLAKE_USER")
 PASSWORD: str = os.getenv("SNOWFLAKE_PASSWORD")
-PASSWORD_DEV: str = os.getenv("PASSWORD_DEV")
 
 WH_NAME: str = os.getenv("WH_NAME")
 DW_NAME: str = os.getenv("DW_NAME")
+
 RAW_SCHEMA: str = os.getenv("RAW_SCHEMA")
+STAGING_SCHEMA: str = os.getenv("STAGING_SCHEMA")
+FINAL_SCHEMA: str = os.getenv("FINAL_SCHEMA")
+
 RAW_TABLE: str = os.getenv("RAW_TABLE")
 METADATA_TABLE: str = os.getenv("METADATA_TABLE")
 
 PARQUET_FORMAT: str = os.getenv("PARQUET_FORMAT")
 ID_SEQUENCE: str = os.getenv("ID_SEQUENCE")
+COMPUTE_SIZE: str = os.getenv("COMPUTE_SIZE")
 
 ROLE_TRANSFORMER: str = os.getenv("ROLE_TRANSFORMER")
+ROLE_BI_ANALYST: str = os.getenv("ROLE_BI_ANALYST")
+ROLE_DATA_SCIENTIST: str = os.getenv("ROLE_DATA_SCIENTIST")
+ROLE_MART_CONSUMER: str = os.getenv("ROLE_MART_CONSUMER")
+
 USER_DEV: str = os.getenv("USER_DEV")
+USER_BI_ANALYST: str = os.getenv("USER_BI_ANALYST")
+USER_DATA_SCIENTIST: str = os.getenv("USER_DATA_SCIENTIST")
+USER_MART_CONSUMER: str = os.getenv("USER_MART_CONSUMER")
+
+PASSWORD_DEV: str = os.getenv("PASSWORD_DEV")
+PASSWORD_BI: str = os.getenv("PASSWORD_BI")
+PASSWORD_DS: str = os.getenv("PASSWORD_DS")
+PASSWORD_MC: str = os.getenv("PASSWORD_MC")
 
 SCRAPING_YEAR: str = os.getenv("SCRAPING_YEAR")
 TIMEZONE: str = os.getenv("TIMEZONE")
-LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
+RETENTION_TIME: int = os.getenv("RETENTION_TIME")
 
+FULL_BACKUP_POLICY_DAYS: int = os.getenv("FULL_BACKUP_POLICY_DAYS")
+RAW_TABLE_BACKUP_POLICY_DAYS: int = os.getenv("RAW_TABLE_BACKUP_POLICY_DAYS")
+FINAL_SCHEMA_BACKUP_POLICY_DAYS: int = os.getenv("FINAL_SCHEMA_BACKUP_POLICY_DAYS")
+
+LOGGER_LEVEL: int = getattr(logging, os.getenv("LOGGER_LEVEL"))
 SQL_BASE_DIR: Path = Path("snowflake_ingestion") / "sql"
 
 def config_logger() -> None:
@@ -86,14 +107,15 @@ def use_context(cur: snowflake.connector.cursor.SnowflakeCursor, WH_NAME: str, D
     Raises:
         SystemExit: Exits the process on any exception when setting the context.
     """
-    logger.debug(f"⚙️ Configuration du contexte: WH={WH_NAME}, DB={DW_NAME}, SCHEMA={RAW_SCHEMA}")
+    logger.debug(f"⚙️ Configuration du contexte: WH={WH_NAME}, DB={DW_NAME}, SCHEMA=SCHEMA_{RAW_SCHEMA}")
     try:
         cur.execute(f"USE WAREHOUSE {WH_NAME}")
         cur.execute(f"USE DATABASE {DW_NAME}")
-        cur.execute(f"USE SCHEMA {RAW_SCHEMA}")
+        cur.execute(f"USE SCHEMA SCHEMA_{RAW_SCHEMA}")
     except Exception as e:
         logger.critical("❌ Erreur : Relancer l'étape Snowflake Infra Init")
         sys.exit(1)
+
 
 def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path | str) -> None:
     """Execute SQL statements from a file using VAR_PLACEHOLDER placeholders.
@@ -116,7 +138,7 @@ def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path
     """
     with open(filepath, "r") as f:
         sql = f.read()
-        keys = re.findall(r"(\w+)_PLACEHOLDER", sql)
+        keys = re.findall(r'(?:SCHEMA_)?(\w+)_PLACEHOLDER', sql)
         variables = {k: globals().get(k, f"<{k}_NOT_FOUND>") for k in keys}
         logger.debug(f"🔎 Variables détectées dans {Path(filepath).name}: {sorted(set(keys))}")
         for key, value in variables.items():
@@ -128,3 +150,31 @@ def run_sql_file(cur: snowflake.connector.cursor.SnowflakeCursor, filepath: Path
             statement = statement.strip()
             if statement:
                 cur.execute(statement)
+
+
+def plural_suffix(count: int) -> str:
+    """Return 's' if count is greater than or equal to 2, else return an empty string.
+
+    Args:
+        count (int): The number of items.
+
+    Returns:
+        str: 's' if count >= 2, else ''.
+
+    Examples:
+        >>> plural_suffix(0)
+        ''
+        >>> plural_suffix(1)
+        ''
+        >>> plural_suffix(2)
+        's'
+        >>> plural_suffix(3)
+        's'
+    """
+    return "s" if count >= 2 else ""
+
+
+if __name__ == "__main__":
+    if LOGGER_LEVEL == "DEBUG":
+        import doctest
+        doctest.testmod(verbose=True)

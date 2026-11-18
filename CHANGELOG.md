@@ -2,6 +2,216 @@
 
 <!-- version list -->
 
+## v3.1.6 (2026-09-19)
+
+### Bug Fixes
+
+- **scraping**: Add User-Agent header to bypass NYC 403
+  ([`0c37450`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0c374501d8cdeefc76f6b68bb2de987670acf065))
+
+### Testing
+
+- **scraping**: Update tests to match curl_cffi usage
+  ([`7631216`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7631216fcdba81bcfb5aa410adf56fc971a16724))
+
+
+## v3.1.5 (2026-03-05)
+
+### Bug Fixes
+
+- **tests**: Patch current_year in year-boundary-sensitive test
+  ([`be8ef2c`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/be8ef2cb4d29da7abefe92cee4de55d1891a53e8))
+
+### Chores
+
+- Add .claude to gitignore
+  ([`4536ff4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/4536ff481b8699578e61b911058106710c84b9b5))
+
+### Documentation
+
+- **architecture**: Remove SCD acronym from section titles
+  ([`6f0c7be`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6f0c7be924c7bdb6175ac37844e5d0917587a4c6))
+
+- **mkdocs**: Add mermaid ERD diagram to architecture page
+  ([`67f9c11`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/67f9c1149daeda0c2d81c4f79d759b6a8bdac48e))
+
+- **mkdocs**: Ajout dans mkdocs
+  ([`ccf83b1`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/ccf83b169fb53c01de77748e021f6133f6ee64ac))
+
+- **rapports**: Modification mineur affichage des rapports de certif
+  ([`dcf6fee`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/dcf6feedfe06ab0d36bdb78b108fbf4da49a0715))
+
+- **readme**: Add certification deliverables section
+  ([`7adf1d2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7adf1d21c87fd8b53da1ecd087054e4a1ad819c7))
+
+
+## v3.1.4 (2026-02-23)
+
+### Bug Fixes
+
+- **dbt**: Ajout arguments imbriqués pour accepted_values (dépréciation dbt 1.11)
+  ([`11253e4`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/11253e4df1be28450dcc397beb441be406660a29))
+
+
+## v3.1.3 (2026-02-23)
+
+### Bug Fixes
+
+- **sql**: Correction placeholder manquant sur REVOKE DATA_SCIENTIST
+  ([`f115cc5`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f115cc51673f8464e1a54a21eef66d16b39ba598))
+
+### Refactoring
+
+- **dbt**: Suppression source raw.taxi_zone_raw (dead code)
+  ([`246973f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/246973f01c2ac5bd121eb2371e3cb039a46f3736))
+
+
+## v3.1.2 (2026-02-22)
+
+### Bug Fixes
+
+- **dbt**: Correction lineage
+  ([`3b81cd6`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/3b81cd6c3e8ab69e8f08efa90937223da8577225))
+
+### Chores
+
+- **.gitignore**: Ajout des dossiers de certif dans le .gitignore
+  ([`0642f66`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0642f6605d1d7a88d4c167a764d43fce9217319d))
+
+### Documentation
+
+- **mkdocs**: Ajout gestion des accès, SLA, backup et modélisation (4 langues)
+  ([`6280220`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/62802207fda08110623b7f29c64fa82db7e65061))
+
+- **test**: Traduction en anglais de la doc non encore traduite test_function
+  ([`aa94fe1`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/aa94fe14bea3aecb9dfe4a24ea80f4221dac63b3))
+
+
+## v3.1.1 (2026-01-17)
+
+### Bug Fixes
+
+- **mkdocs**: Correction tests docstrings paths
+  ([`5288c97`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/5288c975c38a44df3f48a5a4792b6b886615e2d2))
+
+
+## v3.1.0 (2026-01-17)
+
+### Bug Fixes
+
+- **dbt**: Correction materialized: seed
+  ([`b830826`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/b830826bd6094a619193fa0dca42b6ae98fdcb7e))
+
+- **dbt**: Modif type de table
+  ([`1f88733`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/1f88733083c0a5bf6ebe781ac352e4be0be0ae86))
+
+- **snowflake**: Final backup policy correction
+  ([`074ab4f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/074ab4ff8c8066b98cb16cd48eeb24646973c3c1))
+
+- **sql**: Correction lintage sqlfluff et ajout .benchmarks au .gitignore
+  ([`d4f0d85`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d4f0d85175282bdb2acc851345583c58502434a7))
+
+- **sql**: Modification schema backup
+  ([`61d9299`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/61d9299e878dbbf81c86dfab3b9d9b82394dac02))
+
+- **workflow**: Correction sqlfluff affiche erreur lintage
+  ([`9fa2c95`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9fa2c95d6575f65f6cd8120357d8de9a99ba1d5f))
+
+- **workflow**: Correction users variables name
+  ([`2e4c92b`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/2e4c92bedac32a9d1baf917c8937911968dfe433))
+
+### Documentation
+
+- **mkdocs**: Mise a jour de la doc ajout test docstrings et ajout variables
+  ([`f18f892`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f18f89285d41f4cc97bb4b3d47abac6741b5c0b9))
+
+### Features
+
+- **snowflake**: Ajout du backup
+  ([`adc8a7d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/adc8a7dff9953fbc8ddf59e264e8d4193b751bb9))
+
+### Testing
+
+- **snowflake**: Ajout des tests backup et correction import unused security
+  ([`d78bac2`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/d78bac252fb4674036a1016bae90be05785a02f3))
+
+
+## v3.0.0 (2026-01-12)
+
+### Bug Fixes
+
+- **dbt**: Corriger les types de table pour STG et FINAL
+  ([`f94f872`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f94f872980b63ad44183f65d94c3196cdc286d1c))
+
+- **snowflake**: Tables RAW PERMANENT to TRANSIENT et traduction des logs en anglais
+  ([`f3270c7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f3270c75c570e08aba58d165397a47f41d33df8d))
+
+- **sql**: Correction lintage
+  ([`f189b09`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f189b0932faa49ccca17cd20a01a407fb6da014c))
+
+### Documentation
+
+- **mkdocs**: Ajout retention et types de tables dans mkdocs
+  ([`61c15de`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/61c15de617a673f0703b22723faa34950e5c21e4))
+
+### Features
+
+- **snowflake**: Mise en place de la retention
+  ([`b4fc639`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/b4fc6390332120531f6bca17e74148f87bf9086d))
+
+### Testing
+
+- **snowflake**: Correction tests et traduction en anglais des docstrings et logs
+  ([`6c12103`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/6c1210358efb7a8331a47ce6076e738275b90659))
+
+### Breaking Changes
+
+- **dbt**: Certaines tables des schémas 'STAGING' et 'FINAL' ont changé de type
+  (TRANSIENT/PERMANENT). Vérifiez votre configuration.
+
+
+## v2.2.0 (2026-01-01)
+
+### Bug Fixes
+
+- **snowflake**: Evolution de run_sql pour prendre en compte schema_
+  ([`a41cef8`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/a41cef866e374e6c67cf7899edfcd6a4d790b443))
+
+- **tests**: Correction pyhon tests et sqlfluff lintage
+  ([`9ef3ee9`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9ef3ee97421427c9cd97c6b05c3f2a9aaa0fe874))
+
+### Chores
+
+- **workflow**: Ajout des roles metiers dans les variables d'environnements et secrets du workflow
+  ([`9c1cb88`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9c1cb88685475d8a410080f2eed42b963951b9bf))
+
+### Documentation
+
+- **mkdocs**: Adaptation de mkdocs a l'ajout des roles et users metier
+  ([`9af6c52`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/9af6c52eaaed4b5eeca5dce6af48ecdc5e79c126))
+
+### Features
+
+- **snowflake**: Ajout des roles metier dans le sql
+  ([`f3c5c01`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/f3c5c01c896ca625731febc3d3905c4790563e37))
+
+- **workflow**: Variabilisation de COMPUTE_SIZE du warehouse
+  ([`7a7cbe7`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/7a7cbe70172d2d19bbad1cf8608b4be1e93cca25))
+
+### Refactoring
+
+- **dbt**: Ingestion taxi_zone dans source
+  ([`a62be65`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/a62be654ce96ab107aa3d0217dc2dc0c8ed0aeb1))
+
+- **env**: Supresion SCHEMA_ devant RAW
+  ([`bfb7c4d`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/bfb7c4dbc2629b3dfaa7aa982d06b63f1260c4fd))
+
+### Testing
+
+- **dbt**: Ajout description et tests dim_date et dim_time
+  ([`0daff0f`](https://github.com/EliasMez/nyc-taxi-pipeline/commit/0daff0ff84c562a02087aba42b32c0672143f5bf))
+
+
 ## v2.1.2 (2025-12-21)
 
 ### Bug Fixes

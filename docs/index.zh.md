@@ -3,9 +3,9 @@
 此 GitHub Actions 工作流使用 Python 和 dbt 自动化端到端的数据管道，从初始化 Snowflake 基础设施到生成分析表和视图。
 
 <br>
-<a href="https://github.com/EliasMez/nyc-taxi-pipeline/">💻 项目源代码</a>
+<a href="https://github.com/EliasMez/{{ config.repo_name }}/">💻 项目源代码</a>
 <br>
-<a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 在线 **dbt** 文档</a>
+<a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 在线 **dbt** 文档</a>
 <br>
 
 ## 📊 数据来源
@@ -15,7 +15,7 @@
 数据包含：
 
 - 上车和下车日期/时间
-- GPS 行程位置
+- 上下客区域（LocationID 区域编码）
 - 距离、详细费用、支付类型
 - 司机报告乘客数量
 
