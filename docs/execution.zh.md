@@ -13,7 +13,7 @@
 <br>
 
 ## ⚙️ 配置
-1. **复刻** 此仓库：https://github.com/EliasMez/nyc-taxi-pipeline
+1. **复刻** 此仓库：https://github.com/EliasMez/{{ config.repo_name }}
 <br>
 
 2. **添加 必需 的密钥：** `Settings` > `Secrets and variables` > `Actions` > `Secrets` > `New repository secret` <br>
