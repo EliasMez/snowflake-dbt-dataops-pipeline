@@ -1,9 +1,8 @@
-site_name: NYC Taxi Data Pipeline
-site_name: NYC Taxi Data Pipeline
+site_name: Snowflake & dbt DataOps Pipeline
 site_author: "Mezine Elias"
-site_url: https://eliasmez.github.io/nyc-taxi-pipeline/
-repo_url: https://github.com/EliasMez/nyc-taxi-pipeline/
-repo_name: nyc-taxi-pipeline
+site_url: https://eliasmez.github.io/snowflake-dbt-dataops-pipeline/
+repo_url: https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/
+repo_name: snowflake-dbt-dataops-pipeline
 use_directory_urls: true
 docs_dir: "docs/"
 
@@ -76,7 +75,7 @@ plugins:
         - locale: "null"
           name: "dbt docs"
           build: false
-          fixed_link: https://eliasmez.github.io/nyc-taxi-pipeline/dbt/
+          fixed_link: https://eliasmez.github.io/snowflake-dbt-dataops-pipeline/dbt/
   - search
   - mkdocstrings:
       handlers:

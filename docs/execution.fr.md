@@ -15,7 +15,7 @@
 
 
 ## ⚙️ Configuration
-1. **Forkez** ce dépôt : https://github.com/EliasMez/nyc-taxi-pipeline
+1. **Forkez** ce dépôt : https://github.com/EliasMez/{{ config.repo_name }}
 <br>
 
 2. **Ajoutez les secrets OBLIGATOIRES :** `Settings` > `Secrets and variables` > `Actions` > `Secrets` > `New repository secret` <br>

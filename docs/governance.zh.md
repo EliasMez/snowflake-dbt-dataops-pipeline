@@ -39,7 +39,7 @@
 - 使用 **Pytest** 进行单元测试。
 - 使用 **SQLFluff** 进行 SQL 验证。
 - 使用文档字符串和文档测试进行函数文档记录。
-- <a href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/">📚 技术文档</a>
+- <a href="https://eliasmez.github.io/{{ config.repo_name }}/docstrings/">📚 技术文档</a>
 
 ## 🔐 安全
 - 日志中的密钥加密。

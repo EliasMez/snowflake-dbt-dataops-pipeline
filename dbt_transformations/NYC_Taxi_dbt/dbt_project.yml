@@ -15,6 +15,8 @@ clean-targets:
   - "dbt_packages"
 
 vars:
+  repo_name: "snowflake-dbt-dataops-pipeline"
+  project_name: "Snowflake & dbt DataOps Pipeline"
   staging_table: "{{ env_var('STAGING_TABLE') }}"
 
 models:
