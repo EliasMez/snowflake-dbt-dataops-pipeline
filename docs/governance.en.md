@@ -39,7 +39,7 @@ The `FILE_LOADING_METADATA` table tracks the status of each file throughout the 
 - Unit tests with **Pytest**.
 - SQL validation with **SQLFluff**.
 - Docstrings and doctests for function documentation.
-- <a href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/">📚 Technical documentation</a>
+- <a href="https://eliasmez.github.io/{{ config.repo_name }}/docstrings/">📚 Technical documentation</a>
 
 ## 🔐 Security
 - Secrets encrypted in logs.

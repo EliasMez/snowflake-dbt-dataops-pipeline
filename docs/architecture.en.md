@@ -15,7 +15,7 @@
 
 ## 📁 Project Structure
 ```bash
-nyc-taxi-pipeline/
+snowflake-dbt-dataops-pipeline/
 ├── .github/
 │   ├── workflows/
 │   │   ├── nyc_taxi_pipeline.yml
@@ -107,7 +107,7 @@ This table documents **how the data is stored**.
 | dim_date               | `SCHEMA_FINAL`| Permanent   | Table           |
 | marts                  | `SCHEMA_FINAL`|             | View            |
 
-Details available in the <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 Online <strong>dbt</strong> documentation</a>
+Details available in the <a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 Online <strong>dbt</strong> documentation</a>
 
 **Star Schema (ERD)**
 
