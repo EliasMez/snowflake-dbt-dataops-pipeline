@@ -39,7 +39,7 @@ La tabla `FILE_LOADING_METADATA` rastrea el estado de cada archivo a lo largo de
 - Pruebas unitarias con **Pytest**.
 - Validación SQL con **SQLFluff**.
 - Cadenas de documentación y pruebas de documentación para la documentación de funciones.
-- <a href="https://eliasmez.github.io/nyc-taxi-pipeline/docstrings/">📚 Documentación técnica</a>
+- <a href="https://eliasmez.github.io/{{ config.repo_name }}/docstrings/">📚 Documentación técnica</a>
 
 ## 🔐 Seguridad
 - Secretos cifrados en los registros.

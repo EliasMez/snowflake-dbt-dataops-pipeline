@@ -1,10 +1,10 @@
 {% docs __overview__ %}
-# NYC Taxi Data Pipeline - dbt Documentation
+# Snowflake & dbt DataOps Pipeline - dbt Documentation
 
-Welcome to the dbt documentation for the **NYC Taxi Data Pipeline** project.
+Welcome to the dbt documentation for the **Snowflake & dbt DataOps Pipeline** project.
 This project aims to transform raw data from the NYC TLC (Taxi & Limousine Commission) into analytical tables ready for analysis and reporting.
-- 📚 [Global Project Documentation](https://eliasmez.github.io/nyc-taxi-pipeline/)
-- 💻 [Project Source Code](https://github.com/EliasMez/nyc-taxi-pipeline/)
+- 📚 [Global Project Documentation](https://eliasmez.github.io/snowflake-dbt-dataops-pipeline/)
+- 💻 [Project Source Code](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/)
 
 ## Role of dbt
 
