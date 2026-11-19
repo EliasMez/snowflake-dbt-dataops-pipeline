@@ -1,4 +1,4 @@
-# {{config.site_name}}
+# {{ config.site_name }}
 
 This GitHub Actions workflow automates the end-to-end data pipeline, from initializing the Snowflake infrastructure to producing analytical tables and views using Python and dbt.
 
