@@ -1,10 +1,10 @@
 {% docs __overview__ %}
-# {{project_name}} - dbt Documentation
+# {{ var('project_name') }} - dbt Documentation
 
-Welcome to the dbt documentation for the **{{project_name}}** project.
+Welcome to the dbt documentation for the **{{ var('project_name') }}** project.
 This project aims to transform raw data from the NYC TLC (Taxi & Limousine Commission) into analytical tables ready for analysis and reporting.
-- 📚 [Global Project Documentation](https://eliasmez.github.io/{{ config.repo_name }}/)
-- 💻 [Project Source Code](https://github.com/EliasMez/{{ config.repo_name }}/)
+- 📚 [Global Project Documentation](https://eliasmez.github.io/{{ var('repo_name') }}/)
+- 💻 [Project Source Code](https://github.com/EliasMez/{{ var('repo_name') }}/)
 
 ## Role of dbt
 
