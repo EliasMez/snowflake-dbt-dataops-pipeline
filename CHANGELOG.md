@@ -2,6 +2,33 @@
 
 <!-- version list -->
 
+## v3.1.7 (2026-11-19)
+
+### Bug Fixes
+
+- **docs**: Use dbt var syntax for repo_name in overview.md
+  ([`3921e6c`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/3921e6cd4f5a8254546590e3bbbb89d1bbb7b82c))
+
+### Chores
+
+- Update repository name and clean documentation
+  ([`bff2717`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/bff2717136fa91cbe8ac73067a2042777542702b))
+
+- **deps**: Bump mkdocstrings from 0.30.1 to 1.0.0
+  ([`1487df8`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/1487df84bb74b115b290d07f5d89447307a5e598))
+
+### Continuous Integration
+
+- **docs**: Add dbt dependencies to requirements-docs.txt
+  ([`457d3ab`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/457d3ab9f211c01f211875d78d928263c17a8103))
+
+- **docs**: Pin documentation dependencies in dedicated requirements file
+  ([`a38682a`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/a38682aea88748095243d2b21241b4fb9eb272b8))
+
+- **docs**: Use requirements-docs.txt in workflow deploy-docs.yml
+  ([`10e8291`](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/commit/10e8291d96d1dc0b34b9962b1906331d63adee93))
+
+
 ## v3.1.6 (2026-09-19)
 
 ### Bug Fixes
