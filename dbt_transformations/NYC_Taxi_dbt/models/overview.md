@@ -1,76 +1,64 @@
 {% docs __overview__ %}
-# Snowflake & dbt DataOps Pipeline - dbt Documentation
+# Snowflake & dbt DataOps Pipeline — dbt Documentation
 
-Welcome to the dbt documentation for the **Snowflake & dbt DataOps Pipeline** project.
-This project aims to transform raw data from the NYC TLC (Taxi & Limousine Commission) into analytical tables ready for analysis and reporting.
+Technical documentation for the dbt transformation layer of the **Snowflake & dbt DataOps** reference architecture. It covers data modeling, quality tests, source definitions, and model lineage across the warehouse layers.
+
 - 📚 [Global Project Documentation](https://eliasmez.github.io/snowflake-dbt-dataops-pipeline/)
 - 💻 [Project Source Code](https://github.com/EliasMez/snowflake-dbt-dataops-pipeline/)
 
-## Role of dbt
+## Transformation Architecture
 
-The dbt workflow transforms data from the **raw layer** to the **staging layer**, which contains:
-- The imported seed `taxi_zone_lookup`
-- The `stg_taxi_trips` table containing cleaned raw data
-- The intermediate table `int_trip_metrics` for calculated metrics
+The dbt project structures transformations across distinct modeling layers from raw ingestion to analytics-ready datasets:
 
-and then to the **final layer**, which contains:
-- **Dimensions**
-- **Fact Tables**
-- **Analytical Marts**
+- **Sources & Seeds (`raw`):** Immutable landing tables loaded from public trip records and reference seeds (`taxi_zone_lookup`).
+- **Staging (`staging`):** Standardized, type-cast, and cleaned views (`stg_taxi_trips`) enforcing naming conventions and schema validation.
+- **Intermediate (`intermediate`):** Business logic and trip-level metric calculations (`int_trip_metrics`) isolated prior to dimensional modeling.
+- **Core & Marts (`marts`):** Dimensional models (**Dimensions** and **Fact Tables**) and business-oriented **Analytical Marts** exposed for reporting and BI consumption.
 
-Each dbt model is documented here, including its position in the pipeline, its description, and its relationships with other models.
+Each model is documented with column descriptions, data quality tests, and explicit upstream/downstream dependencies.
 
 ## Navigating the Documentation
 
-- **Project Tab**: Explore the structure of your dbt project and access the documentation for each model.
-- **Database Tab**: Visualize the relationships between tables, facts, and dimensions as in a database explorer.
-- **Graph Exploration**: View the dependency graph to follow model lineage by clicking the icon located in the **bottom right corner of the screen**.
-
-For more information about dbt and its operation, consult [the official dbt documentation](https://docs.getdbt.com/).
+- **Project Tab:** Browse the dbt project structure, model definitions, tests, and documentation.
+- **Database Tab:** Inspect tables and views organized by Snowflake database and schema.
+- **Lineage Graph:** Click the graph icon in the **bottom-right corner** to explore end-to-end model and source dependencies.
 
 ---
 {% enddocs %}
 
 {% docs __source_raw__ %}
-## Data Source – Raw
+## Data Source — Raw
 
 The source data comes from **TLC Trip Record Data** (New York City Taxi & Limousine Commission).
 
-It notably contains:
-- Pick-up and drop-off dates and times
-- GPS locations of trips
-- Distances traveled
-- Detailed fares and payment types
-- Number of passengers
+The dataset includes:
+- Pick-up and drop-off timestamps
+- Pick-up and drop-off taxi zone IDs
+- Trip distances and passenger counts
+- Detailed fare breakdowns, surcharges, and payment types
 
-The data is collected by authorized technology providers and provided to the TLC.
-The TLC does not guarantee the accuracy of the data.
+Raw public data provided by the NYC TLC, subject to downstream quality and consistency checks within the pipeline.
 {% enddocs %}
 
 {% docs __dbt_utils__ %}
 ## dbt_utils
 
-The **dbt_utils** package is used in this project **for its advanced testing macros**, notably `accepted_range`, which checks that the values of a column fall within an expected range.
+The **dbt_utils** package provides core SQL generation and testing macros used across the project to standardize surrogate key generation, schema validation, and data integrity checks.
 {% enddocs %}
 
 {% docs __dbt_expectations__ %}
 ## dbt_expectations
 
-The **dbt_expectations** package is used to implement advanced data quality tests.
-
-It notably allows for:
-- Verifying data completeness
-- Controlling expected values
-- Detecting statistical anomalies
-- Reinforcing the reliability of analytical models
-
-These tests ensure the quality of the produced dimensions, facts, and marts.
+The **dbt_expectations** package is used to implement extended data quality assertions across staging, intermediate, and mart models, including:
+- Completeness and nullability checks
+- Value range and accepted set validations
+- Row count and schema consistency assertions
 {% enddocs %}
 
 {% docs __dbt_date__ %}
 ## dbt_date
 
-The **dbt_date** package provides macros for date and time period manipulation.
+The **dbt_date** package provides date and calendar utility macros (installed as a dependency of `dbt_expectations`).
 
-In this project, the date and time dimensions are built manually from source data timestamps to reflect only the values actually observed. The logic is implemented in pure SQL as it meets the needs of the temporal marts (daily, weekly, monthly, hourly, yearly) without requiring a full artificial calendar.
+Temporal dimensions in this project are built directly from observed source timestamps in SQL to match the exact coverage of the ingested data across hourly, daily, weekly, monthly, and yearly grains.
 {% enddocs %}

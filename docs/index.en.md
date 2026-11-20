@@ -1,6 +1,7 @@
-# {{config.site_name}}
+# {{ config.site_name }}
 
-This GitHub Actions workflow automates the end-to-end data pipeline, from initializing the Snowflake infrastructure to producing analytical tables and views using Python and dbt.
+Open-source DataOps reference architecture for ingesting, storing, and transforming analytical data on Snowflake using Python and dbt. Reproducible from a fork of the repository, this project automates the end-to-end lifecycle: infrastructure provisioning, incremental loading, analytical modeling, quality checks, governance, and documentation.
+
 
 <br>
 <a href="https://github.com/EliasMez/{{ config.repo_name }}/">💻 Project source code</a>
@@ -19,7 +20,7 @@ The data includes:
 - Distances, detailed fares, payment types
 - Passenger count reported by the driver
 
-*The data is collected by authorized technology providers and provided to the TLC. The TLC does not guarantee the accuracy of this data.*
+*Raw public data provided by the NYC TLC, subject to downstream quality and consistency checks within the pipeline.*
 
 ## 📄 License
 
