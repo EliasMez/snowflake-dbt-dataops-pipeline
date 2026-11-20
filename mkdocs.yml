@@ -38,6 +38,7 @@ theme:
 
 
 plugins:
+  - macros
   - i18n:
       fallback_to_default: true
       languages:

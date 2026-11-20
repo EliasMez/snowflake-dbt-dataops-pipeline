@@ -1,6 +1,7 @@
-# NYC Taxi Data Pipeline
+# {{ config.site_name }}
 
-Este flujo de trabajo de GitHub Actions automatiza la canalización de datos de extremo a extremo, desde la inicialización de la infraestructura de Snowflake hasta la producción de tablas y vistas analíticas utilizando Python y dbt.
+Arquitectura de referencia DataOps de código abierto para la ingesta, el almacenamiento y la transformación de datos analíticos en Snowflake con Python y dbt. Reproducible desde un fork del repositorio, este proyecto automatiza el ciclo completo: aprovisionamiento de infraestructura, carga incremental, modelado analítico, controles de calidad, gobernanza y documentación.
+
 
 <br>
 <a href="https://github.com/EliasMez/{{ config.repo_name }}/">💻 Código fuente del proyecto</a>
@@ -19,7 +20,7 @@ Los datos incluyen:
 - Distancias, tarifas detalladas, tipos de pago
 - Número de pasajeros reportado por el conductor
 
-*Los datos son recopilados por proveedores de tecnología autorizados y proporcionados a la TLC. La TLC no garantiza la precisión de estos datos.*
+*Datos públicos sin procesar proporcionados por la NYC TLC, sometidos a controles de calidad y coherencia aguas abajo en el pipeline.*
 
 ## 📄 Licencia
 
