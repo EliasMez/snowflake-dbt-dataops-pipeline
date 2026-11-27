@@ -26,13 +26,12 @@ site/
 .pytest_cache
 
 
-certif/
+production_rapports/
 images/
 !docs/images/
 
 # scripts PDF locaux
-make_pdf_e5.sh
-make_pdf_e6.sh
+make_pdf_*.sh
 
 # Claude Code
 .claude/
