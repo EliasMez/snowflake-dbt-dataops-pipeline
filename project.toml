@@ -1,5 +1,5 @@
 [project]
-name = "nyc-taxi-pipeline"
+name = "snowflake-dbt-dataops-pipeline"
 version = "0.1.0"
 description = "NYC Taxi pipeline with Snowflake and dbt"
 

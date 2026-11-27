@@ -15,7 +15,7 @@
 
 ## 📁 项目结构
 ```bash
-nyc-taxi-pipeline/
+snowflake-dbt-dataops-pipeline/
 ├── .github/
 │   ├── workflows/
 │   │   ├── nyc_taxi_pipeline.yml
@@ -107,7 +107,7 @@ nyc-taxi-pipeline/
 | dim_date                 | `SCHEMA_FINAL`  | 永久表    | 表        |
 | marts                    | `SCHEMA_FINAL`  |          | 视图      |
 
-详细内容可查阅 <a href="https://eliasmez.github.io/nyc-taxi-pipeline/dbt">📚 在线 <strong>dbt</strong> 文档</a>
+详细内容可查阅 <a href="https://eliasmez.github.io/{{ config.repo_name }}/dbt">📚 在线 <strong>dbt</strong> 文档</a>
 
 **星型模式（ERD）**
 
