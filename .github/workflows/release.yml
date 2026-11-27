@@ -18,8 +18,12 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.10"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
       - name: Install python-semantic-release
-        run: pip install -r requirements-release.txt
+        run: uv sync --only-group release --no-install-project
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
@@ -28,5 +32,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
         run: |
-          semantic-release version --changelog
-          semantic-release publish
+          uv run semantic-release version --changelog
+          uv run semantic-release publish

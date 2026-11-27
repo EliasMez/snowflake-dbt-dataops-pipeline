@@ -1,6 +1,6 @@
 .env
+*.venv
 temp_files/
-dbt_snow_env/
 __pycache__/
 *.pyc
 dbt.log
@@ -36,3 +36,8 @@ make_pdf_e6.sh
 
 # Claude Code
 .claude/
+
+# poetry et venv non utilisés
+poetry.lock
+requirements/
+

@@ -3,8 +3,6 @@ name: NYC Taxi Data Pipeline
 on:
   schedule:
     - cron: '0 10 1 * *'
-      branches:
-        - main
   workflow_dispatch:
 
 jobs:
@@ -45,55 +43,53 @@ jobs:
       RAW_TABLE_BACKUP_POLICY_DAYS: ${{ vars.RAW_TABLE_BACKUP_POLICY_DAYS || '730' }}
       FINAL_SCHEMA_BACKUP_POLICY_DAYS: ${{ vars.FINAL_SCHEMA_BACKUP_POLICY_DAYS || '90' }}
       AWS_EC2_METADATA_DISABLED: true
-      
-    
+
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v5
-      
-    - name: Setup Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.10'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Checkout Code
+        uses: actions/checkout@v5
 
-    - name: Install Modules
-      run: pip install -e .
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.10'
 
-    - name: Snowflake Infra Init
-      run: |
-        python -m snowflake_ingestion.init_infra_snowflake
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          enable-cache: true
 
-    - name: Scrape Links
-      run: |
-        python -m snowflake_ingestion.scrape_links
+      - name: Install main dependencies and project
+        run: uv sync --no-default-groups
 
-    - name: Upload to Stage
-      run: |
-        python -m snowflake_ingestion.upload_stage
+      - name: Snowflake Infra Init
+        run: |
+          uv run python -m snowflake_ingestion.init_infra_snowflake
 
-    - name: Load to Table
-      run: |
-        python -m snowflake_ingestion.load_to_table
+      - name: Scrape Links
+        run: |
+          uv run python -m snowflake_ingestion.scrape_links
 
-    - name: Install dbt Dependencies
-      run: |
-        dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
-        dbt seed --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+      - name: Upload to Stage
+        run: |
+          uv run python -m snowflake_ingestion.upload_stage
 
-    - name: Run dbt Transformations
-      run: |
-        dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+      - name: Load to Table
+        run: |
+          uv run python -m snowflake_ingestion.load_to_table
 
-    - name: Run dbt Tests
-      run: |
-        dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+      - name: Install dbt Dependencies
+        run: |
+          uv run dbt deps --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+          uv run dbt seed --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
 
-    - name: Set Backup
-      run: |
-        python -m snowflake_ingestion.backup_policy
-    
+      - name: Run dbt Transformations
+        run: |
+          uv run dbt run --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+
+      - name: Run dbt Tests
+        run: |
+          uv run dbt test --project-dir dbt_transformations/NYC_Taxi_dbt --profiles-dir dbt_transformations
+
+      - name: Set Backup
+        run: |
+          uv run python -m snowflake_ingestion.backup_policy
